@@ -55,13 +55,31 @@ public class StreamsWithLists {
     }
     
     /**
-     * Given a list of list of ints, find the lists where a digit exists
+     * Given a list of of ints, find the lists where a digit exists.
+     * 
+     * Iterates over a sequential list of integers representing the list index.
      */
-    public List<Integer> findIndexOfListWhereValueExists(int value, List<List<Integer>> list){
+    public List<Integer> findIndexOfListWhereValueExistsWithIntList(int value, List<List<Integer>> list){
         return IntStream.range(0, list.size())
-                .filter(i -> list.get(i).contains(Integer.valueOf(value)))
+                .filter(i -> list.get(i)
+                        .contains(Integer.valueOf(value)))
                 .mapToObj(Integer::valueOf)
                 .collect(Collectors.toList());
+    }
+    
+    /**
+     * Given a list of list of ints, find the first list where a digit exists.
+     * 
+     * See https://stackoverflow.com/questions/45455368/check-if-value-exists-in-listlistobjects-in-java
+     * 
+     * @return List that contains the matching integer
+     */
+    public List<Integer> findFirstListWhereValueExists(int value, List<List<Integer>> list){
+        
+        return list.stream()
+                .filter(e -> e.contains(Integer.valueOf(value)))
+                .findFirst()
+                .get();
     }
 
     /**

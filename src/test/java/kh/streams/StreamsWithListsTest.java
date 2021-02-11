@@ -15,7 +15,7 @@ public class StreamsWithListsTest {
     private static final List<Integer> EXPECTED_RESULT1 = Arrays.asList(4, 2);
     
     private static final List<List<Integer>> NESTED_LIST1 = Arrays.asList( Arrays.asList(1, 2),
-            Arrays.asList(3, 4), Arrays.asList(5, 6), Arrays.asList(3, 4));
+            Arrays.asList(3, 4), Arrays.asList(5, 6), Arrays.asList(4, 7));
     private static final List<Integer> EXPECTED_RESULT2 = Arrays.asList(1, 2, 3, 4, 5, 6, 3, 4);
     
     @Test
@@ -62,8 +62,8 @@ public class StreamsWithListsTest {
     
     
     @Test
-    public void testFindIndexOfListWhereValueExists() {
-        List<Integer> result = new StreamsWithLists().findIndexOfListWhereValueExists(3, NESTED_LIST1);
+    public void testFindIndexOfListWhereValueExistsWithIntList() {
+        List<Integer> result = new StreamsWithLists().findIndexOfListWhereValueExistsWithIntList(4, NESTED_LIST1);
         assertEquals(2, result.size());
         assertEquals(1, result.get(0).intValue());
         assertEquals(3, result.get(1).intValue());
@@ -71,7 +71,22 @@ public class StreamsWithListsTest {
     
     @Test
     public void testFindIndexOfListWhereValueExists_notInLists() {
-        List<Integer> result = new StreamsWithLists().findIndexOfListWhereValueExists(7, NESTED_LIST1);
+        List<Integer> result = new StreamsWithLists().findIndexOfListWhereValueExistsWithIntList(8, NESTED_LIST1);
         assertEquals(0, result.size());
     }
+    
+    @Test
+    public void testFindFirstListWhereValueExists_1() {
+        List<Integer> result = new StreamsWithLists().findFirstListWhereValueExists(1, NESTED_LIST1);
+        assertEquals(2, result.size());
+        assertTrue(result.containsAll(Arrays.asList(1,2)));
+    }
+
+    @Test
+    public void testFindFirstListWhereValueExists_4() {
+        List<Integer> result = new StreamsWithLists().findFirstListWhereValueExists(4, NESTED_LIST1);
+        assertEquals(2, result.size());
+        assertTrue(result.containsAll(Arrays.asList(3,4)));
+    }
+
 }
