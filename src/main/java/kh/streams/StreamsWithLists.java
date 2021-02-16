@@ -83,10 +83,17 @@ public class StreamsWithLists {
     }
 
     /**
-     * Given a list of list of ints, find the list where each value in a list of ints exists
+     * Given a list of list of ints, find the first index of tge list where each value in a list of ints exists
      */
-//    public List<Integer> findIndexOfListWhereValuesExist(){
-//        
-//    }
+    public int findIndexOfFirstListWhereValueExists(int value, List<List<Integer>> list){
+        
+        List<Integer> listContainingInt = list.stream()
+                .filter(e -> e.contains(Integer.valueOf(value)))
+                .findFirst()
+                .get();
+        
+        int index = list.indexOf(listContainingInt);
+        return index;
+    }
 
 }
