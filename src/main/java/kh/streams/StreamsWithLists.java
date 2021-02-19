@@ -83,7 +83,7 @@ public class StreamsWithLists {
     }
 
     /**
-     * Given a list of list of ints, find the first index of tge list where each value in a list of ints exists
+     * Given a list of list of ints, find the first index of the list where each value in a list of ints exists
      */
     public int findIndexOfFirstListWhereValueExists(int value, List<List<Integer>> list){
         

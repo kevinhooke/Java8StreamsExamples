@@ -88,5 +88,11 @@ public class StreamsWithListsTest {
         assertEquals(2, result.size());
         assertTrue(result.containsAll(Arrays.asList(3,4)));
     }
+    
+    @Test
+    public void testFindIndexOfFirstListWhereValueExists(){
+       int result = new StreamsWithLists().findIndexOfFirstListWhereValueExists(4, NESTED_LIST1);
+       assertEquals(1, result);
+    }
 
 }
