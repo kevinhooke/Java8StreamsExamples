@@ -1,5 +1,6 @@
 package kh.streams;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +95,24 @@ public class StreamsWithLists {
         
         int index = list.indexOf(listContainingInt);
         return index;
+    }
+
+    /**
+     * Given a list of list of ints, find all the indexes of the lists where the passed value exists
+     */
+    public List<Integer> findIndexesOfListsWhereValueExists(int value, List<List<Integer>> list){
+        
+        List<List<Integer>> listsContainingInt = list.stream()
+                .filter(e -> e.contains(Integer.valueOf(value)))
+                .collect(Collectors.toList());
+        
+        List<Integer> listIndexes = new ArrayList<>();
+        
+        //get indexes where each list exists
+        for(List<Integer> listContainingValue : listsContainingInt) {
+            listIndexes.add(list.indexOf(listContainingValue));
+        }
+        return listIndexes;
     }
 
 }

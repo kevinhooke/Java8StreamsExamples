@@ -95,4 +95,19 @@ public class StreamsWithListsTest {
        assertEquals(1, result);
     }
 
+    @Test
+    public void testFindIndexesOfListsWhereValueExists_1() {
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsWhereValueExists(1, NESTED_LIST1);
+        assertEquals(1, result.size());
+        assertEquals(0, result.get(0).intValue());
+    }
+
+    @Test
+    public void testFindIndexesOfListsWhereValueExists_4() {
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsWhereValueExists(4, NESTED_LIST1);
+        assertEquals(2, result.size());
+        assertEquals(1, result.get(0).intValue());
+        assertEquals(3, result.get(1).intValue());
+    }
+
 }
