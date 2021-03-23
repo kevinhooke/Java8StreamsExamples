@@ -2,6 +2,7 @@ package kh.streams;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -10,6 +11,12 @@ import java.util.stream.IntStream;
 
 public class StreamsWithLists {
 
+    /**
+     * Filters a list and returns only even values.
+     * 
+     * @param list
+     * @return
+     */
     public List<Integer> filterListEvenValues(List<Integer> list){
         
         return list.stream()
@@ -17,12 +24,23 @@ public class StreamsWithLists {
                 .collect(Collectors.toList());
     }
     
+    /**
+     * Finds the max value in a list.
+     * 
+     * @param list
+     * @return
+     */
     public Integer getMaxValue(List<Integer> list){
         
         return list.stream()
                 .max(Integer::compare).get();
     }
 
+    /**
+     * Finds the min value in a list.
+     * @param list
+     * @return
+     */
     public Integer getMinValue(List<Integer> list){
         
         return list.stream()
@@ -115,4 +133,37 @@ public class StreamsWithLists {
         return listIndexes;
     }
 
+    /**
+     * For each value in a List of List of ints, find index of the list where the int exists.
+     * 
+     * For example, given [ [1,2,3], [3,4,5], [3,6,7] ] 
+     * 1 exists in list 0
+     * 2 exists in list 0
+     * 3 exists in 0, 1, 2
+     * 4 exists in 1
+     * etc
+     * 
+     */
+    public Map<Integer, List<Integer>> findIndexesOfListWhereEachIntExists(List<List<Integer>> list){
+        
+        Map<Integer, List<Integer>> results = new HashMap<>();
+        
+        //get list of all values
+        List<Integer> values = list.stream()
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
+        
+        //for each of the values, get list within list where it exists
+        values.forEach(
+                
+                value -> {
+                    List<Integer> listsContainingValue = findIndexesOfListsWhereValueExists(value, list);
+                    if(results.get(value) == null) {
+                        results.put(value, listsContainingValue);
+                    }
+                }
+        );
+        
+        return results;
+    }
 }

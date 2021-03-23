@@ -1,6 +1,7 @@
 package kh.streams;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -108,6 +109,35 @@ public class StreamsWithListsTest {
         assertEquals(2, result.size());
         assertEquals(1, result.get(0).intValue());
         assertEquals(3, result.get(1).intValue());
+    }
+    
+    /**
+     * [ [1, 2], [3, 4], [5, 6], [4, 7] ]
+     */
+    @Test
+    public void testFindIndexesOfListWhereEachIntExists_1() {
+        Map<Integer, List<Integer>> results = new StreamsWithLists().findIndexesOfListWhereEachIntExists(NESTED_LIST1);
+        
+        //check positions for 1
+        List<Integer> results1 = results.get(1);
+        assertEquals(1, results1.size());
+        assertTrue(results1.containsAll(Arrays.asList(0)));
+        
+        //check positions for 3
+        List<Integer> results3 = results.get(3);
+        assertEquals(1, results3.size());
+        assertTrue(results3.containsAll(Arrays.asList(1)));
+
+        //check positions for 4
+        List<Integer> results4 = results.get(4);
+        assertEquals(2, results4.size());
+        assertTrue(results4.containsAll(Arrays.asList(1, 3)));
+        
+        //negative test
+        assertFalse(results4.containsAll(Arrays.asList(0, 2)));
+        assertFalse(results4.containsAll(Arrays.asList(1, 2)));
+        assertFalse(results4.containsAll(Arrays.asList(0, 3)));
+
     }
 
 }
