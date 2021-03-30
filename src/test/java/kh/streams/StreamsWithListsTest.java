@@ -42,6 +42,16 @@ public class StreamsWithListsTest {
     }
 
     @Test
+    public void testSortIntegerList() {
+        List<Integer> result = new StreamsWithLists().sortIntegerList(LIST1);
+        assertEquals(1, result.get(0).intValue());
+        assertEquals(2, result.get(1).intValue());
+        assertEquals(3, result.get(2).intValue());
+        assertEquals(3, result.get(3).intValue());
+        assertEquals(4, result.get(4).intValue());
+    }
+    
+    @Test
     public void testCountOccurrencesInList() {
         
         Map<Integer, Long> result = new StreamsWithLists().countOccurrencesInList(LIST1);

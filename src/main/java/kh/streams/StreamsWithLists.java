@@ -46,6 +46,21 @@ public class StreamsWithLists {
         return list.stream()
                 .min(Integer::compare).get();
     }
+
+    /**
+     * Sorts a list of Integers in natural order.
+     * 
+     * @param list
+     * @return
+     */
+    public List<Integer> sortIntegerList(List<Integer> list){
+        
+        return list.stream()
+                .sorted() // sorts by natural order
+                .collect(Collectors.toList());
+    }
+
+    
     
     /**
      * Counts occurrences of each element in the list using Collectors.groupingBy()
@@ -153,7 +168,7 @@ public class StreamsWithLists {
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
         
-        //for each of the values, get list within list where it exists
+        //for each of the values, get list index within list where it exists
         values.forEach(
                 
                 value -> {
