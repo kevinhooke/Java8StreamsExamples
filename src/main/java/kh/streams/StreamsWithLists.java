@@ -2,6 +2,7 @@ package kh.streams;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,22 @@ public class StreamsWithLists {
                 .sorted() // sorts by natural order
                 .collect(Collectors.toList());
     }
-
+    
+    /**
+     * Sort type using a comparator using 2 fields
+     * @param persons
+     * @return List of Person sorted by lastName then firstName
+     */
+    public List<Person> sortTypeWithTwoComparators(List<Person> persons){
+                
+        return persons.stream()
+                .sorted(
+                        Comparator.comparing(Person::getLastName)
+                            .thenComparing(Person::getFirstName)
+                        )
+                .collect(Collectors.toList());
+        
+    }
     
     
     /**
@@ -180,5 +196,117 @@ public class StreamsWithLists {
         );
         
         return results;
+    }
+    
+    /**
+     * Finds combinations of pairs of values in a list. Note that [1,2] and [2,1] are considered
+     * the same and we're only looking for combinations, not permutations (not all possible combinations
+     * where order is relevant).
+     * 
+     * 
+     * 
+     * e.g. given [1,2,3] returns:
+     * [1,2], [1,3], [2,3]
+     * @return
+     */
+    //TODO: refactor to use Streams
+    public List<List<Integer>> findCombinationsOfPairsInList(List<Integer> values){
+        List<List<Integer>> result = new ArrayList<>();
+        
+            for(int startingInt = 0; startingInt < values.size(); startingInt++) {
+
+                for(int secondValue = startingInt + 1 ; secondValue < values.size(); secondValue++) {
+                    List<Integer> tempOneComboList = new ArrayList<>();
+                    tempOneComboList.add(values.get(startingInt));
+                    tempOneComboList.add(values.get(secondValue));
+                    result.add(tempOneComboList);
+                }
+                
+            }
+        
+        return result;
+    }
+    
+    /**
+     * Given a list of list of ints, find combinations in each of the lists.
+     * 
+     * Given: [ [1,2,3], [4,5,6], [7,8,9] ]
+     * Returns:
+     * [ [[1,2], [1,3], [2,3]], [[4,5], [4,6], [5,6]], [[7,8], [7,9], [8,9]] ]
+     * @param list of list of ints
+     * @return list of list of lists
+     */
+    public List<List<List<Integer>>> findCombinationsOfPairsInListOfLists(List<List<Integer>> values){
+        List<List<List<Integer>>> result = new ArrayList<>();
+        
+        values.forEach(listOfInts -> {
+            List<List<Integer>> combosInList = this.findCombinationsOfPairsInList(listOfInts);
+            result.add(combosInList);
+        });
+        
+        return result;
+    }
+    
+    /**
+     * Given a list of list of ints, find all the indexes of the lists that contains the passed list.
+     * 
+     */
+    public List<Integer> findIndexesOfListsThatContainList(List<Integer> listToFind, List<List<Integer>> list){
+        
+        List<List<Integer>> listsContainingInt = list.stream()
+                .filter(e -> e.containsAll(listToFind))
+                .collect(Collectors.toList());
+        
+        List<Integer> listIndexes = new ArrayList<>();
+        
+        //get indexes where each list exists
+        for(List<Integer> listContainingValue : listsContainingInt) {
+            listIndexes.add(list.indexOf(listContainingValue));
+        }
+        return listIndexes;
+    }
+    
+    /**
+     * Find indexes of lists that contain a list.
+     * 
+     * Given a list of list of ints like: [ [1,2,3], [4,1,2], [7,8,9] ]
+     * finds the indexes of where each pair of values exists in each of the other lists.
+     * 
+     * For example:
+     * Pair [1,2] exists in list indexes 0 and 1, returned as a list [0, 1]
+     * Pair [2,3] only exists in [0]
+     * Similar for all other pairs, then only exist in one of the lists.
+     *  
+     * @param values
+     * @return map of pairs with a list of the indexes of the lists where that pair exists,
+     * for example:
+     * [1,2] : [0, 1] // the pair [1,2] exists in list 0 and list 1
+     * [2,3] : [0]
+     * [4,1] : [1]
+     * [4,2] : [1]
+     * etc
+     */
+    public Map<List<Integer>, List<Integer>> findListsContainingList(List<List<Integer>> values){
+        Map<List<Integer>, List<Integer>> result = new HashMap<>();
+        
+        
+        // Given: [ [1,2,3], [4,5,6], [7,8,9] ]
+        List<List<List<Integer>>> listOfCombinations = this.findCombinationsOfPairsInListOfLists(values);
+        //Returns: [
+        //           [[1,2], [1,3], [2,3]], 
+        //           [[4,5], [4,6], [5,6]],
+        //           [[7,8], [7,9], [8,9]]
+        //         ]
+
+        
+        listOfCombinations.stream()
+            .forEach(listOfPairs -> listOfPairs.forEach(pairInList -> {
+                
+                //TODO use findIndexesOfListsThatContainList()
+                
+            }));
+        
+        
+        return result;
     }
 }

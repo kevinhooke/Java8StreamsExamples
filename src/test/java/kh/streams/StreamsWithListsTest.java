@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,19 @@ public class StreamsWithListsTest {
         assertEquals(3, result.get(2).intValue());
         assertEquals(3, result.get(3).intValue());
         assertEquals(4, result.get(4).intValue());
+    }
+    
+    @Test
+    public void testSortTypeWithTwoComparators() {
+        List<Person> persons = new ArrayList<>();
+        persons.add(new Person("bbbb", "cccc"));
+        persons.add(new Person("bbbb", "aaaa"));
+        persons.add(new Person("aaaa", "dddd"));
+        persons.add(new Person("bbbb", "cccc"));
+        
+        List<Person> result = new StreamsWithLists().sortTypeWithTwoComparators(persons);
+        Person person = result.get(0);
+        assertTrue(person.getFirstName().equals("bbbb") && person.getLastName().equals("aaaa"));
     }
     
     @Test
@@ -149,5 +163,91 @@ public class StreamsWithListsTest {
         assertFalse(results4.containsAll(Arrays.asList(0, 3)));
 
     }
+    
+    /**
+     * Given input list of [1,2,3], expected combinations are:
+     * [1,2]
+     * [1,3]
+     * [2,3]
+     */
+    @Test
+    public void testfindCombinationsOfPairsInList() {
+        List<Integer> test = Arrays.asList(1,2,3);
+        List<List<Integer>> results = new StreamsWithLists().findCombinationsOfPairsInList(test);
+        assertEquals(3, results.size());
+        
+        results.forEach(list1 -> System.out.println(list1));
+        assertEquals(Arrays.asList(1,2),results.get(0));
+        assertEquals(Arrays.asList(1,3),results.get(1));
+        assertEquals(Arrays.asList(2,3),results.get(2));
+    }
 
+    /**
+     * Given input list of [1,2,3,4], expected combinations are:
+     * [1,2]
+     * [1,3]
+     * [1,4]
+     * [2,3]
+     * [2,4]
+     * [3,4]
+     */
+    @Test
+    public void testfindCombinationsOfPairsInList_2() {
+        List<Integer> test = Arrays.asList(1,2,3,4);
+        List<List<Integer>> results = new StreamsWithLists().findCombinationsOfPairsInList(test);
+        assertEquals(6, results.size());
+        
+        results.forEach(list1 -> System.out.println(list1));
+        assertEquals(Arrays.asList(1,2),results.get(0));
+        assertEquals(Arrays.asList(1,3),results.get(1));
+        assertEquals(Arrays.asList(1,4),results.get(2));
+        assertEquals(Arrays.asList(2,3),results.get(3));
+        assertEquals(Arrays.asList(2,4),results.get(4));
+        assertEquals(Arrays.asList(3,4),results.get(5));
+    }
+    
+    @Test
+    public void testFindCombinationsOfPairsInListOfLists() {
+        List<List<Integer>> values = Arrays.asList(
+                Arrays.asList(1,2,3),
+                Arrays.asList(4,5,6),
+                Arrays.asList(7,8,9));
+        
+        List<List<List<Integer>>> results = new StreamsWithLists().findCombinationsOfPairsInListOfLists(values);
+
+        results.forEach(list -> System.out.println(list));
+        
+        //test outer list
+        assertEquals(3, results.size());
+        
+        //test inner lists of combos
+        assertEquals(Arrays.asList( Arrays.asList(1,2), Arrays.asList(1,3), Arrays.asList(2,3)), results.get(0));
+        assertEquals(Arrays.asList( Arrays.asList(4,5), Arrays.asList(4,6), Arrays.asList(5,6)), results.get(1));
+        assertEquals(Arrays.asList( Arrays.asList(7,8), Arrays.asList(7,9), Arrays.asList(8,9)), results.get(2));
+    }
+    
+    @Test
+    public void testFindCombinationsOfPairsInListOfLists_2() {
+        List<List<Integer>> values = Arrays.asList(
+                Arrays.asList(1,2,3),
+                Arrays.asList(4,1,2),
+                Arrays.asList(7,8,9));
+        
+        List<List<List<Integer>>> results = new StreamsWithLists().findCombinationsOfPairsInListOfLists(values);
+
+        results.forEach(list -> System.out.println(list));
+        
+        //test outer list
+        assertEquals(3, results.size());
+        
+        //test inner lists of combos
+        assertEquals(Arrays.asList( Arrays.asList(1,2), Arrays.asList(1,3), Arrays.asList(2,3)), results.get(0));
+        assertEquals(Arrays.asList( Arrays.asList(4,1), Arrays.asList(4,2), Arrays.asList(1,2)), results.get(1));
+        assertEquals(Arrays.asList( Arrays.asList(7,8), Arrays.asList(7,9), Arrays.asList(8,9)), results.get(2));
+    }
+    
+    @Test
+    public void testFindIndexesOfListsThatContainList() {
+        
+    }
 }
