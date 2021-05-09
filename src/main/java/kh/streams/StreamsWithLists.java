@@ -286,7 +286,7 @@ public class StreamsWithLists {
      * [4,2] : [1]
      * etc
      */
-    public Map<List<Integer>, List<Integer>> findListsContainingList(List<List<Integer>> values){
+    public Map<List<Integer>, List<Integer>> findListsContainingPairs(List<List<Integer>> values){
         Map<List<Integer>, List<Integer>> result = new HashMap<>();
         
         
@@ -302,8 +302,11 @@ public class StreamsWithLists {
         listOfCombinations.stream()
             .forEach(listOfPairs -> listOfPairs.forEach(pairInList -> {
                 
-                //TODO use findIndexesOfListsThatContainList()
-                
+                List<Integer> listsContaining = findIndexesOfListsThatContainList(pairInList, values);
+                List<Integer> listsContainingSoFar = result.get(pairInList);
+                if(listsContainingSoFar == null) {
+                    //result.put
+                }
             }));
         
         

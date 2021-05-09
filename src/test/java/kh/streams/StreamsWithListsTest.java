@@ -246,8 +246,80 @@ public class StreamsWithListsTest {
         assertEquals(Arrays.asList( Arrays.asList(7,8), Arrays.asList(7,9), Arrays.asList(8,9)), results.get(2));
     }
     
+    /**
+     * Given [ [1,2,3], [4,1,2], [7,8.9] ]
+     * and list to find = [1,2]
+     * 
+     * Expected result: [0, 1] = exists in list 0 and 1
+     */
     @Test
     public void testFindIndexesOfListsThatContainList() {
         
+        List<Integer> listToFind = Arrays.asList(1,2);
+        
+        List<List<Integer>> values = Arrays.asList(
+                Arrays.asList(1,2,3),
+                Arrays.asList(4,1,2),
+                Arrays.asList(7,8,9));
+        
+        
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList(listToFind, values);
+        
+        assertEquals(2, result.size());
+        assertEquals(Integer.valueOf(0), result.get(0));
+        assertEquals(Integer.valueOf(1), result.get(1));
     }
+
+    /**
+     * Given [ [1,2,3], [4,1,2], [7,8.9] ]
+     * and list to find = [1,4]
+     * 
+     * Expected result: [1] = exists only in list 1
+     */
+    @Test
+    public void testFindIndexesOfListsThatContainList_2() {
+        
+        List<Integer> listToFind = Arrays.asList(1,4);
+        
+        List<List<Integer>> values = Arrays.asList(
+                Arrays.asList(1,2,3),
+                Arrays.asList(4,1,2),
+                Arrays.asList(7,8,9));
+        
+        
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList(listToFind, values);
+        
+        assertEquals(1, result.size());
+        assertEquals(Integer.valueOf(1), result.get(0));
+    }
+
+    /**
+     * Given [ [1,2,3], [4,1,2], [7,8.9] ]
+     * and list to find = [1,9]
+     * 
+     * Expected result: [] = this pair does not exist in any of the lists
+     */
+    @Test
+    public void testFindIndexesOfListsThatContainList_3() {
+        
+        List<Integer> listToFind = Arrays.asList(1,9);
+        
+        List<List<Integer>> values = Arrays.asList(
+                Arrays.asList(1,2,3),
+                Arrays.asList(4,1,2),
+                Arrays.asList(7,8,9));
+        
+        
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList(listToFind, values);
+        
+        assertEquals(0, result.size());
+    }
+    
+    @Test
+    public void testFindListsContainingPairs() {
+        //TODO
+        
+    }
+
+
 }
