@@ -2,6 +2,7 @@ package kh.streams;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -183,6 +184,20 @@ public class StreamsWithListsTest {
     }
 
     /**
+     * Given input list of [1,2], expected combinations are:
+     * [1,2]
+     */
+    @Test
+    public void testfindCombinationsOfPairsInList_listLength2() {
+        List<Integer> test = Arrays.asList(1,2);
+        List<List<Integer>> results = new StreamsWithLists().findCombinationsOfPairsInList(test);
+        assertEquals(1, results.size());
+        
+        results.forEach(list1 -> System.out.println(list1));
+        assertEquals(Arrays.asList(1,2),results.get(0));
+    }
+    
+    /**
      * Given input list of [1,2,3,4], expected combinations are:
      * [1,2]
      * [1,3]
@@ -269,7 +284,7 @@ public class StreamsWithListsTest {
         assertEquals(Integer.valueOf(0), result.get(0));
         assertEquals(Integer.valueOf(1), result.get(1));
     }
-
+    
     /**
      * Given [ [1,2,3], [4,1,2], [7,8.9] ]
      * and list to find = [1,4]
@@ -315,10 +330,32 @@ public class StreamsWithListsTest {
         assertEquals(0, result.size());
     }
     
+    //TODO
+    
+    /**
+     * Not working as expected when list only contains 2 elements:
+     * [[4], [1, 6], [1, 6], [1, 2, 5], [1, 2, 5, 6, 7], [2, 5, 6, 7], [9], [3], [8]]
+     */
     @Test
     public void testFindListsContainingPairs() {
-        //TODO
+
+        List<List<Integer>> test = new ArrayList<>();
+        test.add(Arrays.asList(4));
+        test.add(Arrays.asList(1,6));
+        test.add(Arrays.asList(1,6));
+        test.add(Arrays.asList(1,2,5));
+        test.add(Arrays.asList(1,2,5,6,7));
+        test.add(Arrays.asList(2,5,6,7));
+        test.add(Arrays.asList(9));
+        test.add(Arrays.asList(3));
+        test.add(Arrays.asList(8));
         
+        Map<List<Integer>, List<Integer>> result = new StreamsWithLists().findListsContainingPairs(test);
+        
+        //TODO asserts continue here
+        assertNotNull(result);
+        //pair 1,6 is in lists 1, 2 and 4
+        assertEquals(Arrays.asList(1,2,4), result.get(Arrays.asList(1,6)));
     }
 
 

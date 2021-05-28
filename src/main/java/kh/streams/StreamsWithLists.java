@@ -305,7 +305,14 @@ public class StreamsWithLists {
                 List<Integer> listsContaining = findIndexesOfListsThatContainList(pairInList, values);
                 List<Integer> listsContainingSoFar = result.get(pairInList);
                 if(listsContainingSoFar == null) {
-                    //result.put
+                    //add new entry for this list
+                    result.put(pairInList, listsContaining);                    
+                    //TODO continue here
+                }
+                else {
+                    //this list is already in the list, add the next set of indexes were it exists
+                    listsContainingSoFar.addAll(listsContaining);
+                    result.put(pairInList, listsContainingSoFar);
                 }
             }));
         
