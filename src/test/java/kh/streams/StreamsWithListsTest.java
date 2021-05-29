@@ -278,11 +278,79 @@ public class StreamsWithListsTest {
                 Arrays.asList(7,8,9));
         
         
-        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList(listToFind, values);
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList_v1(listToFind, values);
         
         assertEquals(2, result.size());
         assertEquals(Integer.valueOf(0), result.get(0));
         assertEquals(Integer.valueOf(1), result.get(1));
+    }
+
+    @Test
+    public void testFindIndexesOfListsThatContainList_v1_withDuplicates() {
+        
+        List<Integer> listToFind = Arrays.asList(1,2);
+        
+        List<List<Integer>> values = Arrays.asList(
+                Arrays.asList(9),
+                Arrays.asList(1,2),
+                Arrays.asList(1,2),
+                Arrays.asList(7,8,9));
+        
+        
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList_v1(listToFind, values);
+        
+        assertEquals(2, result.size());
+        assertEquals(Integer.valueOf(1), result.get(0));
+        assertEquals(Integer.valueOf(2), result.get(1));
+    }
+
+    /**
+     * This approach works, the v1 approach doesn't work because it only finds the first
+     * occurrence and not all occurrences.
+     */
+    @Test
+    public void testFindIndexesOfListsThatContainList_v2_withDuplicates() {
+        
+        List<Integer> listToFind = Arrays.asList(1,2);
+        
+        List<List<Integer>> values = Arrays.asList(
+                Arrays.asList(9),
+                Arrays.asList(1,2),
+                Arrays.asList(1,2),
+                Arrays.asList(7,8,9));
+        
+        
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList_v2(listToFind, values);
+        
+        assertEquals(2, result.size());
+        assertEquals(Integer.valueOf(1), result.get(0));
+        assertEquals(Integer.valueOf(2), result.get(1));
+    }
+
+    
+    @Test
+    public void testFindIndexesOfListsThatContainList_compareApproaches() {
+        
+        List<Integer> listToFind = Arrays.asList(1,2);
+        
+        List<List<Integer>> values = Arrays.asList(
+                Arrays.asList(1,2,3),
+                Arrays.asList(4,1,2),
+                Arrays.asList(7,8,9));
+        
+        
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList_v1(listToFind, values);
+        
+        assertEquals(2, result.size());
+        assertEquals(Integer.valueOf(0), result.get(0));
+        assertEquals(Integer.valueOf(1), result.get(1));
+
+        List<Integer> result2 = new StreamsWithLists().findIndexesOfListsThatContainList_v2(listToFind, values);
+        
+        assertEquals(2, result2.size());
+        assertEquals(Integer.valueOf(0), result2.get(0));
+        assertEquals(Integer.valueOf(1), result2.get(1));
+
     }
     
     /**
@@ -302,7 +370,7 @@ public class StreamsWithListsTest {
                 Arrays.asList(7,8,9));
         
         
-        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList(listToFind, values);
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList_v1(listToFind, values);
         
         assertEquals(1, result.size());
         assertEquals(Integer.valueOf(1), result.get(0));
@@ -325,13 +393,13 @@ public class StreamsWithListsTest {
                 Arrays.asList(7,8,9));
         
         
-        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList(listToFind, values);
+        List<Integer> result = new StreamsWithLists().findIndexesOfListsThatContainList_v1(listToFind, values);
         
         assertEquals(0, result.size());
     }
     
-    //TODO
     
+    //TODO complete this
     /**
      * Not working as expected when list only contains 2 elements:
      * [[4], [1, 6], [1, 6], [1, 2, 5], [1, 2, 5, 6, 7], [2, 5, 6, 7], [9], [3], [8]]

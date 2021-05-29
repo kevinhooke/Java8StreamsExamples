@@ -246,23 +246,46 @@ public class StreamsWithLists {
         
         return result;
     }
-    
+
     /**
      * Given a list of list of ints, find all the indexes of the lists that contains the passed list.
      * 
      */
-    public List<Integer> findIndexesOfListsThatContainList(List<Integer> listToFind, List<List<Integer>> list){
-        
+    public List<Integer> findIndexesOfListsThatContainList_v1(List<Integer> listToFind, List<List<Integer>> list){
+
+        //TODO bug : this doesn't work when the list exists multiple times - this only returns the first occurrence
+        //get lists that contain the list of values we're searching for
         List<List<Integer>> listsContainingInt = list.stream()
                 .filter(e -> e.containsAll(listToFind))
                 .collect(Collectors.toList());
-        
         List<Integer> listIndexes = new ArrayList<>();
         
         //get indexes where each list exists
         for(List<Integer> listContainingValue : listsContainingInt) {
             listIndexes.add(list.indexOf(listContainingValue));
         }
+        
+        
+        return listIndexes;
+    }
+    
+    /**
+     * Given a list of list of ints, find all the indexes of the lists that contains the passed list.
+     * 
+     */
+    public List<Integer> findIndexesOfListsThatContainList_v2(List<Integer> listToFind, List<List<Integer>> list){
+
+        //alternative approach addresses issue in findIndexesOfListsThatContainList_v1
+        //that doesn't work when the list exists multiple times, only returns the first occurrence
+        
+        //from https://stackoverflow.com/questions/13900585/trying-to-find-all-occurrences-of-an-object-in-arraylist-in-java
+        //from a list of indexes from 0 to the length of the list to search,
+        //return the indexes where the lsit.get(index) contains the sublist we're looking to find 
+        List<Integer> listIndexes =
+                IntStream.range(0, list.size()).boxed()
+                        .filter(i -> list.get(i).containsAll(listToFind))
+                        .collect(Collectors.toList());
+        
         return listIndexes;
     }
     
@@ -302,7 +325,7 @@ public class StreamsWithLists {
         listOfCombinations.stream()
             .forEach(listOfPairs -> listOfPairs.forEach(pairInList -> {
                 
-                List<Integer> listsContaining = findIndexesOfListsThatContainList(pairInList, values);
+                List<Integer> listsContaining = findIndexesOfListsThatContainList_v2(pairInList, values);
                 List<Integer> listsContainingSoFar = result.get(pairInList);
                 if(listsContainingSoFar == null) {
                     //add new entry for this list
