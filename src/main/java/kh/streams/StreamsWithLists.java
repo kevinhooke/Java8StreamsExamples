@@ -333,9 +333,14 @@ public class StreamsWithLists {
                     //TODO continue here
                 }
                 else {
-                    //this list is already in the list, add the next set of indexes were it exists
-                    listsContainingSoFar.addAll(listsContaining);
-                    result.put(pairInList, listsContainingSoFar);
+                    //this pair is already in the list, add the next set of indexes were it exists
+                    //add new indexes that we've not already found
+                    for(Integer nextIndex : listsContaining) {
+                        if(!listsContainingSoFar.contains(nextIndex)){
+                            listsContainingSoFar.add(nextIndex);
+                            result.put(pairInList, listsContainingSoFar);
+                        }
+                    }
                 }
             }));
         

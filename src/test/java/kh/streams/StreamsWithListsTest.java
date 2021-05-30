@@ -285,6 +285,11 @@ public class StreamsWithListsTest {
         assertEquals(Integer.valueOf(1), result.get(1));
     }
 
+    /**
+     * FindIndexesOfListsThatContainList_v1() doesn't work where lists repeat multiple times.
+     * 
+     * See FindIndexesOfListsThatContainList_v2() instead.
+     */
     @Test
     public void testFindIndexesOfListsThatContainList_v1_withDuplicates() {
         
@@ -398,10 +403,9 @@ public class StreamsWithListsTest {
         assertEquals(0, result.size());
     }
     
-    
-    //TODO complete this
+
     /**
-     * Not working as expected when list only contains 2 elements:
+     * Sample list of lists:
      * [[4], [1, 6], [1, 6], [1, 2, 5], [1, 2, 5, 6, 7], [2, 5, 6, 7], [9], [3], [8]]
      */
     @Test
@@ -420,10 +424,16 @@ public class StreamsWithListsTest {
         
         Map<List<Integer>, List<Integer>> result = new StreamsWithLists().findListsContainingPairs(test);
         
-        //TODO asserts continue here
         assertNotNull(result);
         //pair 1,6 is in lists 1, 2 and 4
+        assertEquals(3, result.get(Arrays.asList(1,6)).size());
         assertEquals(Arrays.asList(1,2,4), result.get(Arrays.asList(1,6)));
+
+        //pair 1,2 is in lists 3 and 4
+        assertEquals(2, result.get(Arrays.asList(1,2)).size());
+        assertEquals(Arrays.asList(3,4), result.get(Arrays.asList(1,2)));
+
+        
     }
 
 
